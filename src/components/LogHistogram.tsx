@@ -51,8 +51,8 @@ export default function LogHistogram({ logs }: LogHistogramProps) {
     const bucketSizeNanos = timeRangeNanos / numBuckets;
     
     // Initialize buckets
-    const buckets: { time: number; count: number }[] = Array.from({ length: numBuckets }, (_, i) => ({
-      time: minTime + i * bucketSizeNanos,
+    const buckets: HistogramBucket[] = Array.from({ length: numBuckets }, (_, i) => ({
+      time: formatTimestamp(minTime + i * bucketSizeNanos),
       count: 0
     }));
     
@@ -72,10 +72,11 @@ export default function LogHistogram({ logs }: LogHistogramProps) {
     });
     
     // Format the time for display
-    return buckets.map(bucket => ({
-      time: formatTimestamp(bucket.time),
-      count: bucket.count
-    }));
+    // return buckets.map(bucket => ({
+    //   time: formatTimestamp(bucket.time),
+    //   count: bucket.count
+    // }));
+    return buckets
   }, [logs]);
 
   if (histogramData.length === 0) {
